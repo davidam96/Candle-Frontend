@@ -7,18 +7,18 @@
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:429232027111:android:621ebe597df90a3d12f942",
+        "mobilesdk_app_id": "1:429232027111:android:d84bc65e47cac71e12f942",
         "android_client_info": {
           "package_name": "net.davidam.candle"
         }
       },
       "oauth_client": [
         {
-          "client_id": "429232027111-037dnm6tu4njucskeskp56ifr47uo7p5.apps.googleusercontent.com",
+          "client_id": "429232027111-0odqe91b824ljrrhgvcpvsucijnsadh4.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
             "package_name": "net.davidam.candle",
-            "certificate_hash": "b5ecd8cd08f365fce941b06da3afdb5ffb42264f"
+            "certificate_hash": "c3716c49387c2ab82e79d2e803f7604e0f1021a1"
           }
         },
         {

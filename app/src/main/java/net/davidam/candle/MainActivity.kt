@@ -6,16 +6,10 @@ import android.widget.Toast
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
-import androidx.navigation.findNavController
-import androidx.navigation.ui.AppBarConfiguration
-import androidx.navigation.ui.setupActionBarWithNavController
-import androidx.navigation.ui.setupWithNavController
 import com.firebase.ui.auth.AuthUI
 import com.firebase.ui.auth.FirebaseAuthUIActivityResultContract
 import com.firebase.ui.auth.data.model.FirebaseAuthUIAuthenticationResult
 import com.google.firebase.FirebaseApp
-import com.google.firebase.appcheck.FirebaseAppCheck
-import com.google.firebase.appcheck.safetynet.SafetyNetAppCheckProviderFactory
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import net.davidam.candle.databinding.ActivityMainBinding
@@ -29,7 +23,7 @@ class MainActivity : AppCompatActivity() {
     private var user: FirebaseUser? = null
 
     companion object {
-        private const val TAG = "dabud"
+        private const val TAG = "dabudin"
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -40,23 +34,10 @@ class MainActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         //Start Firestore and its services
-        bootFirestore()
+        bootFirebase()
 
         //Bottom navigation view binding
         val navView: BottomNavigationView = binding.navView
-
-        // ????????
-//        val navController = findNavController(R.id.nav_host_fragment_activity_bottom)
-//        // Passing each menu ID as a set of Ids because each
-//        // menu should be considered as top level destinations.
-//        val appBarConfiguration = AppBarConfiguration(
-//            setOf(
-//                R.id.navigation_home, R.id.navigation_dashboard, R.id.navigation_notifications
-//            )
-//        )
-//        setupActionBarWithNavController(navController, appBarConfiguration)
-//        navView.setupWithNavController(navController)
-        // ????????
 
         //Setting bottom navigation view listener
         navViewListener(navView)
@@ -64,28 +45,14 @@ class MainActivity : AppCompatActivity() {
         setInitialFragment()
     }
 
-    // -- FIRESTORE --
-    private fun bootFirestore() {
+
+
+    // **************** FIREBASE ****************
+    private fun bootFirebase() {
         //Create firebase instance
         FirebaseApp.initializeApp(this)
-        //Enable AppCheck (must do before using any other Firebase SDKs)
-        enableAppCheck()
         //Start Sign-In flow
         bootSignIn()
-    }
-
-    //Sign-In Result Launcher
-    private val signInLauncher = registerForActivityResult(
-        FirebaseAuthUIActivityResultContract()
-    ) { res ->
-        this.onSignInResult(res)
-    }
-
-    private fun enableAppCheck() {
-        val firebaseAppCheck = FirebaseAppCheck.getInstance()
-        firebaseAppCheck.installAppCheckProviderFactory(
-            SafetyNetAppCheckProviderFactory.getInstance()
-        )
     }
 
     private fun bootSignIn() {
@@ -101,6 +68,13 @@ class MainActivity : AppCompatActivity() {
             .setAvailableProviders(providers)
             .build()
         signInLauncher.launch(signInIntent)
+    }
+
+    //Sign-In Result Launcher
+    private val signInLauncher = registerForActivityResult(
+        FirebaseAuthUIActivityResultContract()
+    ) { res ->
+        this.onSignInResult(res)
     }
 
     private fun onSignInResult(result: FirebaseAuthUIAuthenticationResult) {
@@ -119,8 +93,11 @@ class MainActivity : AppCompatActivity() {
                     "/blob/master/auth/src/main/java/com/firebase/ui/auth/ErrorCodes.java")
         }
     }
+    // **************** FIREBASE ****************
 
-    // -- VIEW --
+
+
+    // ****************** VIEW ******************
     private fun navViewListener(navView: BottomNavigationView) {
         navView.setOnItemSelectedListener{
             var fragment: Fragment? = null
@@ -151,4 +128,5 @@ class MainActivity : AppCompatActivity() {
         fragmentTransaction.replace(R.id.frame, fragment)
         fragmentTransaction.commit()
     }
+    // ****************** VIEW ******************
 }
