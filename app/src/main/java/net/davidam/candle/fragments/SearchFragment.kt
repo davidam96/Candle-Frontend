@@ -12,7 +12,6 @@ import android.view.ViewGroup
 import android.widget.SearchView
 import android.widget.TextView
 import android.widget.Toast
-import androidx.annotation.RequiresApi
 import androidx.fragment.app.Fragment
 import com.google.android.gms.tasks.Task
 import com.google.android.material.snackbar.Snackbar
@@ -192,7 +191,7 @@ class SearchFragment : Fragment(), SearchView.OnQueryTextListener {
     @SuppressLint("UseCompatLoadingForDrawables", "NewApi")
     private fun errorSnack(text: String) {
         //We make a personalised snackbar with the background color as red
-        var styledText = Html.fromHtml("<b>ERROR:</b> $text", Build.VERSION.SDK_INT)
+        val styledText = Html.fromHtml("<b>ERROR:</b> $text", Build.VERSION.SDK_INT)
         val snackBar = Snackbar.make(requireView(), styledText, Snackbar.LENGTH_LONG)
         snackBar.view.background = resources.getDrawable(R.drawable.snackbar_error, null)
         snackBar.view.findViewById<TextView>(com.google.android.material.R.id.snackbar_text).maxLines = 10
