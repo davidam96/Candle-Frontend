@@ -5,6 +5,7 @@ import android.graphics.Color
 import android.os.Build
 import android.os.Bundle
 import android.text.Html
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -37,7 +38,6 @@ private const val ARG_PARAM2 = "param2"
  */
 
 @Suppress("UNCHECKED_CAST")
-@RequiresApi(Build.VERSION_CODES.N)
 class SearchFragment : Fragment(), SearchView.OnQueryTextListener {
 
     // TODO: Rename and change types of parameters
@@ -66,6 +66,7 @@ class SearchFragment : Fragment(), SearchView.OnQueryTextListener {
                     putString(ARG_PARAM2, param2)
                 }
             }
+        const val TAG = "dabudin"
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -125,18 +126,17 @@ class SearchFragment : Fragment(), SearchView.OnQueryTextListener {
         // Handling errors
         // (limit the user input to max 10 words and 100 chars to
         // prevent fraudulent use of this function by the client).
-        if (text.length > 100) {
-            errorSnack("El limite maximo son 100 caracteres")
+        if (text.length > 130) {
+            errorSnack("El limite maximo son 130 caracteres")
         }
-        else if (text.split("\\s".toRegex()).size >= 10) {
-            errorSnack("El limite maximo son 10 palabras")
+        else if (text.split("\\s".toRegex()).size >= 13) {
+            errorSnack("El limite maximo son 13 palabras")
         }
         else {
             //Let's make a toast with the response given by GCF's dictionaryGenerator()
             dictionaryGenerator(text).continueWith { task ->
                 val response = task.result!!
                 if (response.errorCode != -1) {
-                    //toast("ERROR: ${response.error}")
                     errorSnack(response.error)
                 }
                 else {
@@ -157,19 +157,27 @@ class SearchFragment : Fragment(), SearchView.OnQueryTextListener {
                 // This continuation runs on either success or failure, but if the task
                 // has failed then result will throw an Exception which will be
                 // propagated down.
-                val result = task.result?.data as HashMap<*, *>
-                val contents = result["contents"] as HashMap<*, *>
-                val word = Word("",
-                    contents["words"] as String,
-                    contents["wordCount"] as Int,
-                    contents["types"] as MutableList<String>?,
-                    contents["meanings"] as MutableList<String>?,
-                    contents["translations"] as MutableList<String>?,
-                    contents["synonyms"] as MutableList<String>?,
-                    contents["examples"] as MutableList<String>?,
-                    contents["combinations"] as MutableList<String>,)
-                val response = WordResponse(word, result["error"] as String, result["errorCode"] as Int)
-                response
+                val response: WordResponse
+                if (task.exception !== null) {
+                    Log.e(TAG, task.exception.toString())
+                    response = WordResponse(Word(), task.exception.toString(), 7)
+                    response
+                }
+                else {
+                    val result = task.result?.data as HashMap<*, *>
+                    val contents = result["contents"] as HashMap<*, *>
+                    val word = Word("",
+                        contents["words"] as String,
+                        contents["wordCount"] as Int,
+                        contents["types"] as MutableList<String>?,
+                        contents["meanings"] as MutableList<String>?,
+                        contents["translations"] as MutableList<String>?,
+                        contents["synonyms"] as MutableList<String>?,
+                        contents["examples"] as MutableList<String>?,
+                        contents["combinations"] as MutableList<String>,)
+                    response = WordResponse(word, result["error"] as String, result["errorCode"] as Int)
+                    response
+                }
             }
     }
     // ********* GOOGLE CLOUD FUNCTIONS *********
@@ -177,17 +185,17 @@ class SearchFragment : Fragment(), SearchView.OnQueryTextListener {
 
 
     // ************ OTHER FUNCTIONS *************
-    private fun toast(text: String): Toast {
-        return Toast.makeText(activity, text, Toast.LENGTH_SHORT)
+    private fun toast(text: String) {
+        Toast.makeText(activity, text, Toast.LENGTH_LONG).show()
     }
 
-    @SuppressLint("UseCompatLoadingForDrawables")
+    @SuppressLint("UseCompatLoadingForDrawables", "NewApi")
     private fun errorSnack(text: String) {
         //We make a personalised snackbar with the background color as red
-        val styledText = Html.fromHtml("<b>ERROR:</b> $text", Build.VERSION.SDK_INT)
+        var styledText = Html.fromHtml("<b>ERROR:</b> $text", Build.VERSION.SDK_INT)
         val snackBar = Snackbar.make(requireView(), styledText, Snackbar.LENGTH_LONG)
         snackBar.view.background = resources.getDrawable(R.drawable.snackbar_error, null)
-        snackBar.view.findViewById<TextView>(com.google.android.material.R.id.snackbar_text).maxLines = 2
+        snackBar.view.findViewById<TextView>(com.google.android.material.R.id.snackbar_text).maxLines = 10
         snackBar.setTextColor(Color.WHITE)
         snackBar.show()
     }
