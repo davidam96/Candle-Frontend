@@ -2,7 +2,7 @@ package net.davidam.candle.model
 
 import java.io.Serializable
 
-data class Word(var id: String = "",
+data class WordDocument(var id: String = "",
                 var words: String = "",
                 var wordCount: Int = 0,
                 var types: MutableList<String>? = null,
@@ -13,9 +13,10 @@ data class Word(var id: String = "",
                 var combinations: MutableList<String>? = null
 ): Serializable
 
-data class WordRequest(var words: String=""): Serializable
+data class Request(var words: String=""): Serializable
 
-data class WordResponse(var contents: Word? = null,
-                        var error: String = "",
-                        var errorCode: Int = -1
+data class Response(var contents: WordDocument? = null,
+                    var error: String = "",
+                    var errorCode: Int = -1,
+                    var isPerfectMatch: Boolean = false
 ): Serializable

@@ -20,9 +20,7 @@ import com.google.firebase.functions.ktx.functions
 import com.google.firebase.ktx.Firebase
 import com.google.gson.Gson
 import net.davidam.candle.R
-import net.davidam.candle.model.Word
-import net.davidam.candle.model.WordRequest
-import net.davidam.candle.model.WordResponse
+import net.davidam.candle.model.*
 
 
 // TODO: Rename parameter arguments, choose names that match
@@ -145,9 +143,9 @@ class SearchFragment : Fragment(), SearchView.OnQueryTextListener {
         }
     }
 
-    private fun dictionaryGenerator(text: String): Task<WordResponse> {
+    private fun dictionaryGenerator(text: String): Task<Response> {
         // Create the arguments to the callable function.
-        val data = Gson().toJson(WordRequest(text))
+        val data = Gson().toJson(Request(text))
 
         return functions
             .getHttpsCallable("dictionaryGenerator")
@@ -156,16 +154,16 @@ class SearchFragment : Fragment(), SearchView.OnQueryTextListener {
                 // This continuation runs on either success or failure, but if the task
                 // has failed then result will throw an Exception which will be
                 // propagated down.
-                val response: WordResponse
+                val response: Response
                 if (task.exception !== null) {
                     Log.e(TAG, task.exception.toString())
-                    response = WordResponse(Word(), task.exception.toString(), 7)
+                    response = Response(WordDocument(), task.exception.toString(), 7)
                     response
                 }
                 else {
                     val result = task.result?.data as HashMap<*, *>
                     val contents = result["contents"] as HashMap<*, *>
-                    val word = Word("",
+                    val word = WordDocument("",
                         contents["words"] as String,
                         contents["wordCount"] as Int,
                         contents["types"] as MutableList<String>?,
@@ -174,7 +172,10 @@ class SearchFragment : Fragment(), SearchView.OnQueryTextListener {
                         contents["synonyms"] as MutableList<String>?,
                         contents["examples"] as MutableList<String>?,
                         contents["combinations"] as MutableList<String>,)
-                    response = WordResponse(word, result["error"] as String, result["errorCode"] as Int)
+                    response = Response(word,
+                        result["error"] as String,
+                        result["errorCode"] as Int,
+                        result["isPerfectMatch"] as Boolean)
                     response
                 }
             }
