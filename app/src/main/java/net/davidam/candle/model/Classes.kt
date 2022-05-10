@@ -18,5 +18,5 @@ data class Request(var words: String=""): Serializable
 data class Response(var contents: WordDocument? = null,
                     var error: String = "",
                     var errorCode: Int = -1,
-                    var isPerfectMatch: Boolean = false
+                    var exactMatch: Boolean = false
 ): Serializable

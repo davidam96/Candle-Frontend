@@ -175,7 +175,7 @@ class SearchFragment : Fragment(), SearchView.OnQueryTextListener {
                     response = Response(word,
                         result["error"] as String,
                         result["errorCode"] as Int,
-                        result["isPerfectMatch"] as Boolean)
+                        result["exactMatch"] as Boolean)
                     response
                 }
             }
