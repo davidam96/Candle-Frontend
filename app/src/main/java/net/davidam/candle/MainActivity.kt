@@ -12,15 +12,18 @@ import com.firebase.ui.auth.data.model.FirebaseAuthUIAuthenticationResult
 import com.google.firebase.FirebaseApp
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
+import com.google.firebase.firestore.FirebaseFirestore
 import net.davidam.candle.databinding.ActivityMainBinding
 import net.davidam.candle.fragments.AccountFragment
 import net.davidam.candle.fragments.PracticeFragment
 import net.davidam.candle.fragments.SearchFragment
+import net.davidam.candle.model.User
 
 class MainActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMainBinding
-    private var user: FirebaseUser? = null
+    private lateinit var db: FirebaseFirestore
+    private var auth: FirebaseUser? = null
 
     companion object {
         private const val TAG = "dabudin"
@@ -49,8 +52,9 @@ class MainActivity : AppCompatActivity() {
 
     // **************** FIREBASE ****************
     private fun bootFirebase() {
-        //Create firebase instance
-        FirebaseApp.initializeApp(this)
+        //Create firebase and firestore instances
+        val app = FirebaseApp.initializeApp(this)
+        db = FirebaseFirestore.getInstance(app!!)
         //Start Sign-In flow
         bootSignIn()
     }
@@ -81,9 +85,23 @@ class MainActivity : AppCompatActivity() {
         val response = result.idpResponse
         if (result.resultCode == RESULT_OK) {
             // Successfully signed in
-            user = FirebaseAuth.getInstance().currentUser
-            Toast.makeText(this, "LOGIN CORRECTO: '${user!!.email}'", Toast.LENGTH_LONG).show()
-            //...
+            auth = FirebaseAuth.getInstance().currentUser
+            val user = User(auth!!.uid, "${auth!!.email}",
+                "", "", "${auth!!.photoUrl}")
+            Log.d(TAG, "LOGIN CORRECTO: ${user.email}")
+
+            //  We make sure to store the user information in Firestore
+            //  (POR HACER):
+            //  1) (put these lines as a function inside the 'model' folder and call it from here)
+            //  2) (skip this whole signIn part after a first succesful login, using persistence)
+            //  3) Retocar la funcion de CloudFunctions.kt > SearchDictionary para que guarde el
+            //      hashmap devuelto por la response dentro de un Response DataClass
+            db.collection("users").document(user.uid)
+                .get().addOnSuccessListener { userDoc ->
+                    if (!userDoc.exists()) {
+                        db.collection("users").document(user.uid).set(user)
+                    }
+                }
         } else {
             // Sign in failed. If response is null the user canceled the
             // sign-in flow using the back button. Otherwise check

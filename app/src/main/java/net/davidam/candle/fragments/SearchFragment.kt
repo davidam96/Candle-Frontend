@@ -115,11 +115,11 @@ class SearchFragment : Fragment(), SearchView.OnQueryTextListener {
             errorSnack("El limite maximo son 13 palabras")
         }
         else {
-            //Let's make a toast with the response given by dictionaryGenerator()
-            CloudFunctions.dictionaryGenerator(text).continueWith { task ->
+            //Let's make a toast with the response given by searchDictionary()
+            CloudFunctions.searchDictionary(text).continueWith { task ->
                 val response = task.result!!
-                if (response.errorCode != -1) {
-                    errorSnack(response.error)
+                if (response.data!!.errorCode != -1) {
+                    errorSnack(response.data!!.error)
                 }
                 else {
                     toast(": ${Gson().toJson(response)}")
