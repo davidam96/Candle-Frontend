@@ -29,6 +29,12 @@ class MainActivity : AppCompatActivity() {
     //      by using sharedPreferences)
     //  2) Implementar en el backend que solo se almacenen palabras en singular, si la palabra termina
     //     en 's' o en 'es' no se crea una nueva entrada en plural, se devuelve la del singular.
+    //  3) line 115 --> Implementar funcionalidad: en caso de que el usuario no se haya guardado
+    //     correctamente en Firestore, debemos limitar la funcionalidad del usuario en el resto de
+    //     la app (las palabras aprendidas y las editadas deberán guardarse en el archivo local de
+    //     SharedPreferences (User.xml) y se deberá avisar al usuario con ventanas emergentes de que
+    //     inicie sesión para que se guarden sus cambios.
+    //  4) ViewModel.kt (line 34) --> hay un problema de código asíncrono que debe sincronizarse
 
     private lateinit var binding: ActivityMainBinding
     private lateinit var viewModel: ViewModel
@@ -106,12 +112,18 @@ class MainActivity : AppCompatActivity() {
             //  We make sure to store the user information in Firestore
             user = viewModel.checkUser(authUser)
 
+            //  POR HACER
+            //  If there was an error storing the user data in Firestore, we raise a
+            //  flag so the client cannot perform certain actions within the app
+            if (user.uid == "") {
+                Log.d(TAG, "NO HAY USUARIO")
+            }
+
             //  We also store the user info in locally using SharedPreferences
-/*            val editor = userSP.edit()
+            val editor = userSP.edit()
             val userJson = Gson().toJson(user)
             editor.putString("user", userJson)
             editor.apply()
-            Log.d(TAG, "${userSP.getString("user", null)}")*/
         } else {
             // Sign in failed. If response is null the user canceled the
             // sign-in flow using the back button. Otherwise check

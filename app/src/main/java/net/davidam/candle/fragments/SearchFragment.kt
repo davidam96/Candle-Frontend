@@ -119,7 +119,7 @@ class SearchFragment : Fragment(), SearchView.OnQueryTextListener {
             CloudFunctions.searchDictionary(text).continueWith { task ->
                 val response = task.result!!
                 if (response.errorCode != -1) {
-                    //  errorSnack(response.data!!.error)
+                    errorSnack(response.error)
                 }
                 else {
                     toast(": ${Gson().toJson(response)}")
