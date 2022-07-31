@@ -116,7 +116,8 @@ class SearchFragment : Fragment(), SearchView.OnQueryTextListener {
         }
         else {
             //Let's make a toast with the response given by searchDictionary()
-            CloudFunctions.searchDictionary(text).continueWith { task ->
+            CloudFunctions.searchDictionary(text)
+                .continueWith { task ->
                 val response = task.result!!
                 if (response.errorCode != -1) {
                     errorSnack(response.error)

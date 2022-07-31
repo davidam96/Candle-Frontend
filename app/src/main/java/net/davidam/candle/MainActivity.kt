@@ -1,9 +1,15 @@
 package net.davidam.candle
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.content.SharedPreferences
+import android.graphics.Color
+import android.os.Build
 import android.os.Bundle
+import android.text.Html
 import android.util.Log
+import android.widget.SearchView
+import android.widget.TextView
 
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import androidx.appcompat.app.AppCompatActivity
@@ -11,6 +17,7 @@ import androidx.fragment.app.Fragment
 import com.firebase.ui.auth.AuthUI
 import com.firebase.ui.auth.FirebaseAuthUIActivityResultContract
 import com.firebase.ui.auth.data.model.FirebaseAuthUIAuthenticationResult
+import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.FirebaseApp
 import com.google.firebase.auth.FirebaseAuth
 import com.google.gson.Gson
@@ -20,26 +27,26 @@ import net.davidam.candle.fragments.PracticeFragment
 import net.davidam.candle.fragments.SearchFragment
 
 import net.davidam.candle.model.User
+import net.davidam.candle.model.UserResponse
 import net.davidam.candle.viewmodel.ViewModel
 
 class MainActivity : AppCompatActivity() {
 
     //  (POR HACER):
-    //  1) (skip this whole signIn part after a first succesful login, setting local persistence
-    //      by using sharedPreferences)
-    //  2) Implementar en el backend que solo se almacenen palabras en singular, si la palabra termina
+    //  1) Implementar en el backend que solo se almacenen palabras en singular, si la palabra termina
     //     en 's' o en 'es' no se crea una nueva entrada en plural, se devuelve la del singular.
-    //  3) line 115 --> Implementar funcionalidad: en caso de que el usuario no se haya guardado
+    //  2) line 115 --> Implementar funcionalidad: en caso de que el usuario no se haya guardado
     //     correctamente en Firestore, debemos limitar la funcionalidad del usuario en el resto de
     //     la app (las palabras aprendidas y las editadas deberán guardarse en el archivo local de
     //     SharedPreferences (User.xml) y se deberá avisar al usuario con ventanas emergentes de que
     //     inicie sesión para que se guarden sus cambios.
-    //  4) ViewModel.kt (line 34) --> hay un problema de código asíncrono que debe sincronizarse
+    //  3) ViewModel.kt (line 24) --> Remember to later make Firestore's security rules in order to
+    //     restrict the format of all future database requests.
 
     private lateinit var binding: ActivityMainBinding
     private lateinit var viewModel: ViewModel
     private lateinit var userSP: SharedPreferences
-    private lateinit var user: User
+    private  var user: User? = null
 
     companion object {
         private const val TAG = "dabudin"
@@ -110,20 +117,23 @@ class MainActivity : AppCompatActivity() {
             Log.d(ViewModel.TAG, "LOGIN CORRECTO: ${authUser!!.email}")
 
             //  We make sure to store the user information in Firestore
-            user = viewModel.checkUser(authUser)
+            viewModel.checkUser(authUser).continueWith { task ->
+                val userResponse = task.result as UserResponse
+                if (task.exception != null) {
+                    errorSnack(task.exception.toString())
+                } else {
+                    //  We store the user as a global variable
+                    //  for later use across different activities
+                    user = userResponse.user
 
-            //  POR HACER
-            //  If there was an error storing the user data in Firestore, we raise a
-            //  flag so the client cannot perform certain actions within the app
-            if (user.uid == "") {
-                Log.d(TAG, "NO HAY USUARIO")
+                    //  We also store the user info in locally using SharedPreferences
+                    val editor = userSP.edit()
+                    val userJson = Gson().toJson(user)
+                    editor.putString("user", userJson)
+                    editor.apply()
+                }
             }
 
-            //  We also store the user info in locally using SharedPreferences
-            val editor = userSP.edit()
-            val userJson = Gson().toJson(user)
-            editor.putString("user", userJson)
-            editor.apply()
         } else {
             // Sign in failed. If response is null the user canceled the
             // sign-in flow using the back button. Otherwise check
@@ -167,6 +177,18 @@ class MainActivity : AppCompatActivity() {
         val fragmentTransaction = supportFragmentManager.beginTransaction()
         fragmentTransaction.replace(R.id.frame, fragment)
         fragmentTransaction.commit()
+    }
+
+    @SuppressLint("UseCompatLoadingForDrawables")
+    private fun errorSnack(text: String) {
+        //We make a personalised snackbar with the background color as red
+        val mainActivityView = findViewById<SearchView>(R.id.mainActivity)
+        val styledText = Html.fromHtml("<b>ERROR:</b> $text", Build.VERSION.SDK_INT)
+        val snackBar = Snackbar.make(mainActivityView, styledText, Snackbar.LENGTH_LONG)
+        snackBar.view.background = resources.getDrawable(R.drawable.snackbar_error, null)
+        snackBar.view.findViewById<TextView>(com.google.android.material.R.id.snackbar_text).maxLines = 10
+        snackBar.setTextColor(Color.WHITE)
+        snackBar.show()
     }
     // ****************** VIEW ******************
 }

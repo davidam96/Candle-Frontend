@@ -5,14 +5,11 @@ import com.google.android.gms.tasks.Task
 import com.google.firebase.FirebaseApp
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.firestore.FirebaseFirestore
-import net.davidam.candle.model.Response
+import com.google.gson.Gson
 import net.davidam.candle.model.User
-import net.davidam.candle.model.WordDocument
-import java.lang.Exception
+import net.davidam.candle.model.UserResponse
 import java.time.ZonedDateTime
 import java.time.format.DateTimeFormatter
-import java.time.format.DateTimeFormatterBuilder
-import java.util.*
 
 class ViewModel(app: FirebaseApp) {
 
@@ -27,38 +24,30 @@ class ViewModel(app: FirebaseApp) {
     //  (POR HACER): Remember to later make Firestore's security rules in order to restrict the
     //  format of all future database requests, having into account each method written here.
 
-    fun checkUser(authUser: FirebaseUser): User {
-        var user = User(authUser.uid, "${authUser.email}",
+    fun checkUser(authUser: FirebaseUser): Task<UserResponse> {
+        val user = User(authUser.uid, "${authUser.email}",
             "", "", "${authUser.photoUrl}", setDate())
+        var response = UserResponse(user)
 
-        //  (POR HACER): Este metodo retorna "user" antes de que se complete el listener, lo cual es
-        //  un problema porque entonces se cierra antes de que el listener pueda terminar su trabajo
-        //  Posible solución: implementar corrutinas?
-        db.collection("users").document(user.uid).get()
-            .addOnSuccessListener { userDoc ->
-                Log.d(TAG, userDoc.toString())
-                if (!userDoc.exists()) {
-                    db.collection("users").document(authUser.uid).set(user)
-                        .continueWith { task ->
-                            if (task.exception !== null) {
-                                user = User("", "", "", "",
-                                    "", "", "")
-                            }
-                        }
-                }
+        //  (POR HACER): probar si este codigo funciona correctamente
+        val userDocRef = db.collection("users").document(user.uid)
+        return db.runTransaction { transaction ->
+            val userDoc = transaction.get(userDocRef)
+            if (!userDoc.exists()) {
+                db.collection("users").document(authUser.uid).set(user)
             }
-        return user
+        }
+            .continueWith { task ->
+                if (task.exception != null) {
+                    response = UserResponse(null, task.exception.toString(), 10)
+                }
+                response
+            }
     }
 
     private fun setDate(): String {
         val date = ZonedDateTime.now()
         val formatter = DateTimeFormatter.ofPattern("dd/MM/uuuu 'T'HH:mm:ss '['O VV']'")
-
-        //  Retrieve Test
-/*        Log.d("dabudin", date.format(formatter).toString())
-        val date2 = ZonedDateTime.parse(date.format(formatter).toString(), formatter)
-        Log.d("dabudin", date2.format(formatter).toString())*/
-
         return date.format(formatter).toString()
     }
 

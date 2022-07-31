@@ -13,9 +13,9 @@ data class WordDocument(var words: String = "",
                 var combinations: MutableList<String>? = null
 ): Serializable
 
-data class Request(var words: String=""): Serializable
+data class WordRequest(var words: String=""): Serializable
 
-data class Response(var docs: MutableList<WordDocument>? = null,
+data class WordResponse(var docs: MutableList<WordDocument>? = null,
                 var error: String = "",
                 var errorCode: Int = -1,
                 var exactMatch: Boolean = false
@@ -27,4 +27,10 @@ data class User(var uid: String,
                 var phone: String = "",
                 var photoUrl: String = "",
                 var lastLogin: String,
-                var lastLogout: String = "")
+                var lastLogout: String = ""
+): Serializable
+
+data class UserResponse(var user: User? = null,
+                        var error: String = "",
+                        var errorCode: Int = -1,
+): Serializable
