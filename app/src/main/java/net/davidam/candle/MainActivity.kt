@@ -23,11 +23,10 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.gson.Gson
 import net.davidam.candle.databinding.ActivityMainBinding
 import net.davidam.candle.fragments.AccountFragment
+import net.davidam.candle.fragments.MenuFragment
 import net.davidam.candle.fragments.PracticeFragment
-import net.davidam.candle.fragments.SearchFragment
 
 import net.davidam.candle.model.User
-import net.davidam.candle.model.UserResponse
 import net.davidam.candle.viewmodel.ViewModel
 
 class MainActivity : AppCompatActivity() {
@@ -42,6 +41,8 @@ class MainActivity : AppCompatActivity() {
     //     inicie sesión para que se guarden sus cambios.
     //  3) ViewModel.kt (line 24) --> Remember to later make Firestore's security rules in order to
     //     restrict the format of all future database requests.
+    //  4) When the user decides to logout in the profile section, the user Shared Preferences must
+    //     be deleted.
 
     private lateinit var binding: ActivityMainBinding
     private lateinit var viewModel: ViewModel
@@ -75,24 +76,28 @@ class MainActivity : AppCompatActivity() {
 
 
 
-    // **************** FIREBASE ****************
+    // **************** FIREBASE & LOGIN ****************
     private fun bootFirebase() {
         //  Create firebase instance
         val app = FirebaseApp.initializeApp(this)
         //  Initialize custom ViewModel class
         viewModel = ViewModel(app!!)
-        //  Start Sign-In flow, but only if there is no user in local persistence
+
+        //  Start Sign-In flow, but only if there is no user in local persistence;
+        //  if there is already one in shared_prefs, then serialize it into a user object
         if (!userSP.contains("user")) {
             bootSignIn()
+        } else {
+            user = Gson().fromJson(userSP.getString("user", "{}"), User::class.java)
         }
     }
 
     private fun bootSignIn() {
         // Choose authentication providers
         val providers = arrayListOf(
-            AuthUI.IdpConfig.GoogleBuilder().build(),
-            AuthUI.IdpConfig.EmailBuilder().build(),
-            AuthUI.IdpConfig.PhoneBuilder().build())
+            AuthUI.IdpConfig.GoogleBuilder().build())
+/*            AuthUI.IdpConfig.EmailBuilder().build(),
+            AuthUI.IdpConfig.PhoneBuilder().build())*/
 
         // Create and launch sign-in intent
         val signInIntent = AuthUI.getInstance()
@@ -113,18 +118,17 @@ class MainActivity : AppCompatActivity() {
         val response = result.idpResponse
         if (result.resultCode == RESULT_OK) {
             // Successfully signed in
-            val authUser = FirebaseAuth.getInstance().currentUser
-            Log.d(ViewModel.TAG, "LOGIN CORRECTO: ${authUser!!.email}")
+            val authUser = FirebaseAuth.getInstance().currentUser!!
 
             //  We make sure to store the user information in Firestore
             viewModel.checkUser(authUser).continueWith { task ->
-                val userResponse = task.result as UserResponse
                 if (task.exception != null) {
                     errorSnack(task.exception.toString())
                 } else {
                     //  We store the user as a global variable
                     //  for later use across different activities
-                    user = userResponse.user
+                    user = task.result as User
+                    Log.d(ViewModel.TAG, "LOGIN CORRECTO: ${authUser.email}")
 
                     //  We also store the user info in locally using SharedPreferences
                     val editor = userSP.edit()
@@ -133,7 +137,6 @@ class MainActivity : AppCompatActivity() {
                     editor.apply()
                 }
             }
-
         } else {
             // Sign in failed. If response is null the user canceled the
             // sign-in flow using the back button. Otherwise check
@@ -143,7 +146,7 @@ class MainActivity : AppCompatActivity() {
                     "/blob/master/auth/src/main/java/com/firebase/ui/auth/ErrorCodes.java")
         }
     }
-    // **************** FIREBASE ****************
+    // **************** FIREBASE & LOGIN ****************
 
 
 
@@ -153,7 +156,7 @@ class MainActivity : AppCompatActivity() {
             var fragment: Fragment? = null
             when (it.itemId) {
                 R.id.fragment_search -> {
-                    fragment = SearchFragment()
+                    fragment = MenuFragment()
                 }
                 R.id.fragment_practice -> {
                     fragment = PracticeFragment()
@@ -169,7 +172,7 @@ class MainActivity : AppCompatActivity() {
 
     private fun setInitialFragment() {
         val fragmentTransaction = supportFragmentManager.beginTransaction()
-        fragmentTransaction.add(R.id.frame, SearchFragment())
+        fragmentTransaction.add(R.id.frame, MenuFragment())
         fragmentTransaction.commit()
     }
 

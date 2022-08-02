@@ -4,8 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:id="@+id/fragment_search"
-    tools:context=".fragments.SearchFragment">
+    android:id="@+id/fragment_menu"
+    tools:context=".fragments.MenuFragment">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
@@ -15,21 +15,21 @@
             android:layout_width="match_parent"
             android:layout_height="60dp"
             android:layout_marginStart="10dp"
-            android:layout_marginTop="44dp"
+            android:layout_marginTop="16dp"
             android:layout_marginEnd="10dp"
             android:background="@drawable/rounded_border"
             android:orientation="horizontal"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.571"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" >
+            app:layout_constraintTop_toTopOf="parent">
 
             <SearchView
                 android:id="@+id/search_bar"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:queryHint="Search any word..."
-                android:iconifiedByDefault="false"/>
+                android:iconifiedByDefault="false"
+                android:queryHint="Search any word or phrase..." />
         </LinearLayout>
 
     </androidx.constraintlayout.widget.ConstraintLayout>

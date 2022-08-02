@@ -10,7 +10,7 @@ import net.davidam.candle.adapter.ViewPageAdapter
 import net.davidam.candle.databinding.ActivityViewPageBinding
 import net.davidam.candle.fragments.AccountFragment
 import net.davidam.candle.fragments.PracticeFragment
-import net.davidam.candle.fragments.SearchFragment
+import net.davidam.candle.fragments.MenuFragment
 
 class ViewPageActivity : AppCompatActivity() {
 
@@ -33,7 +33,7 @@ class ViewPageActivity : AppCompatActivity() {
 
     private fun setupViewPager(viewPager2: ViewPager2) {
         val adapter = ViewPageAdapter(this)
-        adapter.addFragment(SearchFragment(), "Search")
+        adapter.addFragment(MenuFragment(), "Menu")
         adapter.addFragment(PracticeFragment(), "Practice")
         adapter.addFragment(AccountFragment(), "Account")
         viewPager2.adapter = adapter

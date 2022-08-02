@@ -29,8 +29,3 @@ data class User(var uid: String,
                 var lastLogin: String,
                 var lastLogout: String = ""
 ): Serializable
-
-data class UserResponse(var user: User? = null,
-                        var error: String = "",
-                        var errorCode: Int = -1,
-): Serializable
