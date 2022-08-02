@@ -67,9 +67,9 @@ class MainActivity : AppCompatActivity() {
         bootFirebase()
 
         //  Bottom navigation view binding
-        val navView: BottomNavigationView = binding.navView
+        val bottomNavView: BottomNavigationView = binding.bottomNavView
         //  Setting bottom navigation view listener
-        navViewListener(navView)
+        navViewListener(bottomNavView)
         //  Setting initial fragment (search bar)
         setInitialFragment()
     }
@@ -151,8 +151,8 @@ class MainActivity : AppCompatActivity() {
 
 
     // ****************** VIEW ******************
-    private fun navViewListener(navView: BottomNavigationView) {
-        navView.setOnItemSelectedListener{
+    private fun navViewListener(bottomNavView: BottomNavigationView) {
+        bottomNavView.setOnItemSelectedListener{
             var fragment: Fragment? = null
             when (it.itemId) {
                 R.id.fragment_search -> {
