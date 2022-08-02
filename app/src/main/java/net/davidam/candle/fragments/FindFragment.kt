@@ -12,6 +12,7 @@ import android.widget.SearchView
 import android.widget.TextView
 import android.widget.Toast
 import androidx.fragment.app.Fragment
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.snackbar.Snackbar
 import com.google.gson.Gson
 import net.davidam.candle.R
@@ -25,12 +26,12 @@ private const val ARG_PARAM2 = "param2"
 
 /**
  * A simple [Fragment] subclass.
- * Use the [MenuFragment.newInstance] factory method to
+ * Use the [FindFragment.newInstance] factory method to
  * create an instance of this fragment.
  */
 
 @Suppress("UNCHECKED_CAST")
-class MenuFragment : Fragment(), SearchView.OnQueryTextListener {
+class FindFragment : Fragment(), SearchView.OnQueryTextListener {
 
     // TODO: Rename and change types of parameters
     private var param1: String? = null
@@ -51,7 +52,7 @@ class MenuFragment : Fragment(), SearchView.OnQueryTextListener {
         // TODO: Rename and change types and number of parameters
         @JvmStatic
         fun newInstance(param1: String, param2: String) =
-            MenuFragment().apply {
+            FindFragment().apply {
                 arguments = Bundle().apply {
                     putString(ARG_PARAM1, param1)
                     putString(ARG_PARAM2, param2)
@@ -72,7 +73,7 @@ class MenuFragment : Fragment(), SearchView.OnQueryTextListener {
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_menu, container, false)
+        return inflater.inflate(R.layout.fragment_find, container, false)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -122,6 +123,18 @@ class MenuFragment : Fragment(), SearchView.OnQueryTextListener {
                 }
                 else {
                     toast(": ${Gson().toJson(response)}")
+
+                    // (POR HACER) RV code...
+/*                    private fun initRV() {
+                        adapter = CustomAdapterProducto(this, R.layout.row_producto)
+                        binding.rvProductos.adapter = adapter
+                        binding.rvProductos.layoutManager = LinearLayoutManager(this)
+                    }
+
+                    private fun drawRV() {
+                        adapter.setProductos(productosFav)
+                        toolbar.title = categoria.nombre
+                    }*/
                 }
             }
         }

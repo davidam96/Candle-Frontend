@@ -23,7 +23,7 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.gson.Gson
 import net.davidam.candle.databinding.ActivityMainBinding
 import net.davidam.candle.fragments.AccountFragment
-import net.davidam.candle.fragments.MenuFragment
+import net.davidam.candle.fragments.FindFragment
 import net.davidam.candle.fragments.PracticeFragment
 
 import net.davidam.candle.model.User
@@ -32,17 +32,14 @@ import net.davidam.candle.viewmodel.ViewModel
 class MainActivity : AppCompatActivity() {
 
     //  (POR HACER):
-    //  1) Implementar en el backend que solo se almacenen palabras en singular, si la palabra termina
-    //     en 's' o en 'es' no se crea una nueva entrada en plural, se devuelve la del singular.
-    //  2) line 115 --> Implementar funcionalidad: en caso de que el usuario no se haya guardado
-    //     correctamente en Firestore, debemos limitar la funcionalidad del usuario en el resto de
-    //     la app (las palabras aprendidas y las editadas deberán guardarse en el archivo local de
-    //     SharedPreferences (User.xml) y se deberá avisar al usuario con ventanas emergentes de que
-    //     inicie sesión para que se guarden sus cambios.
+    //  1) FindFragment.kt (line 127) ---> Implementar el codigo del RecyclerView para que vaya
+    //  guardando las palabras buscadas por el usuario.
+    //  2) AccountFragment.kt ---> When the user decides to logout in the profile section,
+    //  the user Shared Preferences must be deleted.
     //  3) ViewModel.kt (line 24) --> Remember to later make Firestore's security rules in order to
-    //     restrict the format of all future database requests.
-    //  4) When the user decides to logout in the profile section, the user Shared Preferences must
-    //     be deleted.
+    //  restrict the format of all future database requests.
+    //  4) Implementar en el backend que solo se almacenen palabras en singular, si la palabra termina
+    //  en 's' o en 'es' no se crea una nueva entrada en plural, se devuelve la del singular.
 
     private lateinit var binding: ActivityMainBinding
     private lateinit var viewModel: ViewModel
@@ -155,8 +152,8 @@ class MainActivity : AppCompatActivity() {
         bottomNavView.setOnItemSelectedListener{
             var fragment: Fragment? = null
             when (it.itemId) {
-                R.id.fragment_search -> {
-                    fragment = MenuFragment()
+                R.id.fragment_menu -> {
+                    fragment = FindFragment()
                 }
                 R.id.fragment_practice -> {
                     fragment = PracticeFragment()
@@ -172,7 +169,7 @@ class MainActivity : AppCompatActivity() {
 
     private fun setInitialFragment() {
         val fragmentTransaction = supportFragmentManager.beginTransaction()
-        fragmentTransaction.add(R.id.frame, MenuFragment())
+        fragmentTransaction.add(R.id.frame, FindFragment())
         fragmentTransaction.commit()
     }
 

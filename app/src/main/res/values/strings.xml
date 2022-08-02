@@ -1,4 +1,4 @@
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools">
     <string name="app_name">Candle</string>
     <string name="title_activity_test">TestActivity</string>
     <string name="navigation_drawer_open">Open navigation drawer</string>
@@ -22,5 +22,5 @@
     <string name="title_notifications">Notifications</string>
     <string name="practice">Practice</string>
     <string name="account">Account</string>
-    <string name="search">Search</string>
+    <string name="find">Find</string>
 </resources>
