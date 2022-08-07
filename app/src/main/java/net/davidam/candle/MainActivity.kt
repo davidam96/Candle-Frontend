@@ -1,15 +1,19 @@
 package net.davidam.candle
 
 import android.annotation.SuppressLint
+import android.app.Activity
 import android.content.Context
+import android.content.Intent
 import android.content.SharedPreferences
 import android.graphics.Color
 import android.os.Build
 import android.os.Bundle
 import android.text.Html
 import android.util.Log
+import android.view.View
 import android.widget.SearchView
 import android.widget.TextView
+import androidx.activity.result.contract.ActivityResultContracts
 
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import androidx.appcompat.app.AppCompatActivity
@@ -32,14 +36,18 @@ import net.davidam.candle.viewmodel.ViewModel
 class MainActivity : AppCompatActivity() {
 
     //  (POR HACER):
-    //  1) FindFragment.kt (line 127) ---> Implementar el codigo del RecyclerView para que vaya
-    //  guardando las palabras buscadas por el usuario.
-    //  2) AccountFragment.kt ---> When the user decides to logout in the profile section,
-    //  the user Shared Preferences must be deleted.
-    //  3) ViewModel.kt (line 24) --> Remember to later make Firestore's security rules in order to
-    //  restrict the format of all future database requests.
-    //  4) Implementar en el backend que solo se almacenen palabras en singular, si la palabra termina
-    //  en 's' o en 'es' no se crea una nueva entrada en plural, se devuelve la del singular.
+    //  1)  FindFragment.kt (line 127) ---> Implementar el codigo del RecyclerView para que vaya
+    //      guardando las palabras buscadas por el usuario.
+    //  2)  AccountFragment.kt ---> When the user decides to logout in the profile section,
+    //      the user Shared Preferences must be deleted.
+    //  3)  ViewModel.kt (line 24) --> Remember to later make Firestore's security rules in order to
+    //      restrict the format of all future database requests.
+    //  4)  Implementar en el backend que solo se almacenen palabras en singular, si la palabra termina
+    //      en 's' o en 'es' no se crea una nueva entrada en plural, se devuelve la del singular.
+    //  5)  MainActivity.kt (line 199) --> Implementar los dos métodos de abajo de esta activity
+    //  6)  row_word.xml --> hacer que los text view 'tvWord' y 'tvWordMeaning' sean scrollables
+    //      horizontalmente y restringir su altura a como maximo 2 lineas (para un mejor
+    //      comportamiento responsive)
 
     private lateinit var binding: ActivityMainBinding
     private lateinit var viewModel: ViewModel
@@ -189,6 +197,30 @@ class MainActivity : AppCompatActivity() {
         snackBar.view.findViewById<TextView>(com.google.android.material.R.id.snackbar_text).maxLines = 10
         snackBar.setTextColor(Color.WHITE)
         snackBar.show()
+    }
+
+    //  POR HACER
+
+    private var resultLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
+        // There are no request codes
+/*        if (result.resultCode == Activity.RESULT_OK) {
+            val data: Intent? = result.data
+            val isFavoritosReturn = data!!.getBooleanExtra("isFavoritosReturn", false)
+            refreshFavoritos(isFavoritosReturn)
+        }*/
+    }
+
+    fun onClickWord(v: View) {
+/*        if (existeUsuario) {
+            val gamepulsado = v.tag as Game
+            val intent = Intent(this, NewActivity::class.java)
+            intent.putExtra("game", gamepulsado)
+            intent.putExtra("favoritos", favoritos)
+            intent.putExtra("isFavoritos", isFavoritos)
+
+            //startActivityForResult(intent, REQUEST_NEW) --> deprecated
+            resultLauncher.launch(intent) // --> nueva manera de hacerlo
+        }*/
     }
     // ****************** VIEW ******************
 }

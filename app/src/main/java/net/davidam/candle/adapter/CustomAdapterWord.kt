@@ -28,7 +28,7 @@ class CustomAdapterWord(val context: Context,
         return dataList.size
     }
 
-    internal fun setProductos(productos: List<WordDocument>) {
+    internal fun setWords(productos: List<WordDocument>) {
         this.dataList = productos
         notifyDataSetChanged()
     }
