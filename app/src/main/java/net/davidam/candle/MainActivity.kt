@@ -27,8 +27,8 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.gson.Gson
 import net.davidam.candle.databinding.ActivityMainBinding
 import net.davidam.candle.fragments.AccountFragment
-import net.davidam.candle.fragments.FindFragment
 import net.davidam.candle.fragments.PracticeFragment
+import net.davidam.candle.fragments.SearchFragment
 
 import net.davidam.candle.model.User
 import net.davidam.candle.viewmodel.ViewModel
@@ -36,7 +36,7 @@ import net.davidam.candle.viewmodel.ViewModel
 class MainActivity : AppCompatActivity() {
 
     //  (POR HACER):
-    //  1)  FindFragment.kt (line 127) ---> Implementar el codigo del RecyclerView para que vaya
+    //  1)  SearchFragment.kt (line 127) ---> Implementar el codigo del RecyclerView para que vaya
     //      guardando las palabras buscadas por el usuario.
     //  2)  AccountFragment.kt ---> When the user decides to logout in the profile section,
     //      the user Shared Preferences must be deleted.
@@ -160,8 +160,8 @@ class MainActivity : AppCompatActivity() {
         bottomNavView.setOnItemSelectedListener{
             var fragment: Fragment? = null
             when (it.itemId) {
-                R.id.fragment_menu -> {
-                    fragment = FindFragment()
+                R.id.fragment_search -> {
+                    fragment = SearchFragment()
                 }
                 R.id.fragment_practice -> {
                     fragment = PracticeFragment()
@@ -177,7 +177,7 @@ class MainActivity : AppCompatActivity() {
 
     private fun setInitialFragment() {
         val fragmentTransaction = supportFragmentManager.beginTransaction()
-        fragmentTransaction.add(R.id.frame, FindFragment())
+        fragmentTransaction.add(R.id.frame, SearchFragment())
         fragmentTransaction.commit()
     }
 

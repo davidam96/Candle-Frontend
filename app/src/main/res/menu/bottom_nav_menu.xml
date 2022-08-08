@@ -2,9 +2,9 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 
     <item
-        android:id="@+id/fragment_menu"
+        android:id="@+id/fragment_search"
         android:icon="@drawable/ic_dictionary_24dp"
-        android:title="@string/find" />
+        android:title="@string/search" />
 
     <item
         android:id="@+id/fragment_practice"

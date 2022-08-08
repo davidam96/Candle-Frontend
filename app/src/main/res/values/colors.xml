@@ -17,11 +17,11 @@
     <color name="yellow_candle">#F7DC8D</color>
     <color name="red_candle">#E6415A</color>
     <color name="blue_candle">#7278F3</color>
-    <color name="tier_gray">#A8A8A8</color>
-    <color name="tier_green">#72FF59</color>
-    <color name="tier_blue">#63A2FF</color>
-    <color name="tier_purple">#C25FFF</color>
-    <color name="tier_yellow">#FFCE3A</color>
+    <color name="tier_gray">#B8B8B8</color>
+    <color name="tier_green">#3AD31E</color>
+    <color name="tier_blue">#0B58CA</color>
+    <color name="tier_purple">#8911D3</color>
+    <color name="tier_yellow">#F8C62F</color>
     <color name="red_error">#F61A4D</color>
     <color name="transparent">#00FFFFFF</color>
 </resources>

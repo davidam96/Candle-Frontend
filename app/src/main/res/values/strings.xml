@@ -23,8 +23,8 @@
     <!-- My string values -->
     <string name="practice">Practice</string>
     <string name="account">Account</string>
-    <string name="find">Find</string>
-    <string name="word">Word or Phrase (you can lead a horse into water but you cannot make)</string>
-    <string name="word_meaning">Meaning (you can lead a horse intowater but you cannot make him drink the rivers sweet waters)</string>
+    <string name="search">Search</string>
+    <string name="word">You can lead a horse into water but you cannot make him drink</string>
+    <string name="word_meaning">You can lead a horse into water but you cannot make him drink the rivers sweet waters</string>
     <string name="word_image">Word Image</string>
 </resources>
