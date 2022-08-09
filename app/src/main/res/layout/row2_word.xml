@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:card_view="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/cvWord"
+    android:id="@+id/cvWord2"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     app:cardBackgroundColor="@color/blue_candle"
@@ -18,7 +18,7 @@
         android:layout_height="wrap_content">
 
         <TextView
-            android:id="@+id/tvWord"
+            android:id="@+id/tvWord2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
@@ -27,13 +27,13 @@
             android:text="@string/word"
             android:textColor="@color/black"
             android:textSize="24sp"
-            app:layout_constraintEnd_toStartOf="@+id/ivWord"
+            app:layout_constraintEnd_toStartOf="@+id/ivWord2"
             app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintStart_toEndOf="@+id/llTierColor"
+            app:layout_constraintStart_toEndOf="@+id/llTierColor2"
             app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
-            android:id="@+id/tvWordMeaning"
+            android:id="@+id/tvWordMeaning2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
@@ -45,15 +45,15 @@
             android:textSize="18sp"
             android:textStyle="italic"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@+id/ivWord"
+            app:layout_constraintEnd_toStartOf="@+id/ivWord2"
             app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintStart_toEndOf="@+id/llTierColor"
-            app:layout_constraintTop_toBottomOf="@+id/tvWord"
+            app:layout_constraintStart_toEndOf="@+id/llTierColor2"
+            app:layout_constraintTop_toBottomOf="@+id/tvWord2"
             app:layout_constraintVertical_bias="0.0"
             tools:ignore="TextContrastCheck" />
 
         <ImageView
-            android:id="@+id/ivWord"
+            android:id="@+id/ivWord2"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             app:layout_constraintDimensionRatio="1:1"
@@ -65,7 +65,7 @@
             tools:srcCompat="@tools:sample/avatars" />
 
         <LinearLayout
-            android:id="@+id/llTierColor"
+            android:id="@+id/llTierColor2"
             android:layout_width="12dp"
             android:layout_height="0dp"
             android:minHeight="100dp"

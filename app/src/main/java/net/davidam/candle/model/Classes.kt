@@ -9,6 +9,7 @@ data class WordDocument(var words: String = "",
                         var meanings: MutableList<String>? = null,
                         var translations: MutableList<String>? = null,
                         var synonyms: MutableList<String>? = null,
+                        var antonyms: MutableList<String>? = null,
                         var examples: MutableList<String>? = null,
                         var combinations: MutableList<String>? = null,
                         var imageUrl: String = ""

@@ -21,6 +21,7 @@
     <string name="title_notifications">Notifications</string>
 
     <!-- My string values -->
+    <string name="candle">Candle</string>
     <string name="practice">Practice</string>
     <string name="account">Account</string>
     <string name="search">Search</string>

@@ -2,6 +2,7 @@ package net.davidam.candle.adapter
 
 import android.annotation.SuppressLint
 import android.content.Context
+import android.util.DisplayMetrics
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -50,23 +51,25 @@ class CustomAdapterWord(
             tvWord.text = dataItem.words
 
             val tvWordMeaning = itemView.findViewById<TextView>(R.id.tvWordMeaning)
-            val rnd: Int = (Math.random()*3).toInt()
+            val rnd: Int = (Math.random()*(dataItem.meanings!!.size)).toInt()
             tvWordMeaning.text = dataItem.meanings!![rnd]
 
             val ivWord = itemView.findViewById<ImageView>(R.id.ivWord)
-            if (dataItem.imageUrl == "") {
+            val url = "https://yamurrah.com.au/wp-content/uploads/2019/01/dog-square.jpg"
+            Picasso.get().load(url).resize(80.dpToPx(context), 80.dpToPx(context)).into(ivWord)
+            //  Picasso.get().load(url).fit().into(ivWord)
+/*            if (dataItem.imageUrl == "") {
                 ivWord.visibility = View.GONE
-                //  POR HACER --> these widths are in pixels, we have to set it to dps
-                tvWord.maxWidth = 360
-                tvWordMeaning.maxWidth = 350
-                //  POR HACER
+                tvWord.maxWidth = Integer.MAX_VALUE //  360.dpToPx(context)
+                tvWordMeaning.maxWidth = Integer.MAX_VALUE //  350.dpToPx(context)
             } else if (dataItem.imageUrl != ""){
                 // foto de internet a traves de Picasso
                 Picasso.get().load(dataItem.imageUrl).into(ivWord)
-            }
+            }*/
 
             itemView.tag = dataItem
         }
-
+        private fun Int.dpToPx(context: Context) =
+            this * context.resources.displayMetrics.densityDpi / DisplayMetrics.DENSITY_DEFAULT
     }
 }

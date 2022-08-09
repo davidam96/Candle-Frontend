@@ -6,6 +6,8 @@ import com.google.firebase.FirebaseApp
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.firestore.FirebaseFirestore
 import net.davidam.candle.model.User
+import net.davidam.candle.model.WordDocument
+import net.davidam.candle.model.WordResponse
 import java.time.ZonedDateTime
 import java.time.format.DateTimeFormatter
 
@@ -41,6 +43,4 @@ class ViewModel(app: FirebaseApp) {
         val formatter = DateTimeFormatter.ofPattern("dd/MM/uuuu 'T'HH:mm:ss '['O VV']'")
         return date.format(formatter).toString()
     }
-
-
 }

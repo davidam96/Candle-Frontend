@@ -45,9 +45,13 @@ class MainActivity : AppCompatActivity() {
     //  4)  Implementar en el backend que solo se almacenen palabras en singular, si la palabra termina
     //      en 's' o en 'es' no se crea una nueva entrada en plural, se devuelve la del singular.
     //  5)  MainActivity.kt (line 199) --> Implementar los dos métodos de abajo de esta activity
-    //  6)  row_word.xml --> hacer que los text view 'tvWord' y 'tvWordMeaning' sean scrollables
-    //      horizontalmente y restringir su altura a como maximo 2 lineas (para un mejor
-    //      comportamiento responsive)
+    //  6)  Arreglar el mal comportamiento responsive que tienen los cardview cuando mostramos una
+    //      imagen con Picasso.
+    //  7)  Implementar que el searchview salga de una page en vez de estar en el
+    //      menú principal como un layout.
+    //  8)  Las búsquedas siempre devuelven un resultado duplicado. Comprobar a qué se debe y arreglarlo.
+    //      (Avance --> la BDD solo devuelve un resultado, y depurando me he dado cuenta que el
+    //      problema se debe a que el código dentro de addOnSuccessListener se ejecuta dos veces.)
 
     private lateinit var binding: ActivityMainBinding
     private lateinit var viewModel: ViewModel

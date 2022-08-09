@@ -15,7 +15,6 @@ import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.snackbar.Snackbar
-import com.google.gson.Gson
 import net.davidam.candle.R
 import net.davidam.candle.adapter.CustomAdapterWord
 import net.davidam.candle.model.*
@@ -48,7 +47,7 @@ class SearchFragment : Fragment(), SearchView.OnQueryTextListener {
          * Use this factory method to create a new instance of
          * this fragment using the provided parameters.
          *
-         * @param wordsTxt Parameter 1.
+         * @param words Parameter 1.
          * @return A new instance of fragment SearchFragment.
          */
         // TODO: Rename and change types and number of parameters
@@ -118,19 +117,16 @@ class SearchFragment : Fragment(), SearchView.OnQueryTextListener {
         else {
             //  Let's make a toast with the response given by searchDictionary()
             CloudFunctions.searchDictionary(text)
-                .continueWith { task ->
-                val response = task.result!!
-                if (response.errorCode != -1) {
-                    errorSnack(response.error)
-                }
-                else {
-                    //  POR HACER (ver si funciona este código)
-                    response.docs?.forEach { doc ->
-                        words.add(doc)
+                .addOnSuccessListener { wordResponse ->
+                    if (wordResponse.errorCode != -1) {
+                        errorSnack(wordResponse.error)
                     }
-                    drawRV()
-                    //  toast(": ${Gson().toJson(response)}")
-                }
+                    else {
+                        wordResponse.docs!!.forEach { doc ->
+                            words.add(doc)
+                        }
+                        drawRV()
+                    }
             }
         }
     }
@@ -148,6 +144,7 @@ class SearchFragment : Fragment(), SearchView.OnQueryTextListener {
     }
 
     private fun drawRV() {
+        words
         adapter.setWords(words)
     }
     //  ************** RECYCLER VIEW *************
@@ -155,10 +152,6 @@ class SearchFragment : Fragment(), SearchView.OnQueryTextListener {
 
 
     //  ************ OTHER STUFF *************
-    private fun toast(text: String) {
-        Toast.makeText(activity, text, Toast.LENGTH_LONG).show()
-    }
-
     @SuppressLint("UseCompatLoadingForDrawables", "NewApi")
     //We make a personalised snackbar with the background color as red
     private fun errorSnack(text: String) {
@@ -168,6 +161,10 @@ class SearchFragment : Fragment(), SearchView.OnQueryTextListener {
         snackBar.view.findViewById<TextView>(com.google.android.material.R.id.snackbar_text).maxLines = 10
         snackBar.setTextColor(Color.WHITE)
         snackBar.show()
+    }
+
+    private fun toast(text: String) {
+        Toast.makeText(activity, text, Toast.LENGTH_LONG).show()
     }
     //  ************ OTHER STUFF *************
 }
