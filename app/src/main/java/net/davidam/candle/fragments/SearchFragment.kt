@@ -37,6 +37,7 @@ class SearchFragment : Fragment(), SearchView.OnQueryTextListener {
     private var wordsTxt: String? = null
 
     private var words = mutableListOf<WordDocument>()
+    private lateinit var searchBar: SearchView
     private lateinit var rvWords: RecyclerView
     private lateinit var adapter: CustomAdapterWord
 
@@ -89,7 +90,7 @@ class SearchFragment : Fragment(), SearchView.OnQueryTextListener {
 
     //  *************** SEARCH BAR ***************
     private fun initSearchBar() {
-        val searchBar = requireView().findViewById<SearchView>(R.id.search_bar)
+        searchBar = requireView().findViewById(R.id.search_bar)
         searchBar.setOnQueryTextListener(this)
     }
 
@@ -100,6 +101,9 @@ class SearchFragment : Fragment(), SearchView.OnQueryTextListener {
     override fun onQueryTextSubmit(text: String): Boolean {
         //  Activate Firestore machinery here to create a new document if the queried
         //  word doesn't exist, or return a document with the word info if it does.
+        searchBar.clearFocus()
+        //  This line clears the text inside the searchView
+        //  searchBar.setQuery("", false)
         errorHandler(text)
         return false
     }

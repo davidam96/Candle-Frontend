@@ -49,9 +49,6 @@ class MainActivity : AppCompatActivity() {
     //      imagen con Picasso.
     //  7)  Implementar que el searchview salga de una page en vez de estar en el
     //      menú principal como un layout.
-    //  8)  Las búsquedas siempre devuelven un resultado duplicado. Comprobar a qué se debe y arreglarlo.
-    //      (Avance --> la BDD solo devuelve un resultado, y depurando me he dado cuenta que el
-    //      problema se debe a que el código dentro de addOnSuccessListener se ejecuta dos veces.)
 
     private lateinit var binding: ActivityMainBinding
     private lateinit var viewModel: ViewModel
