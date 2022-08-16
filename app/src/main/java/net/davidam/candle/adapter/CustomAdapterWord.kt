@@ -61,15 +61,13 @@ class CustomAdapterWord(
             val hsvWordMeaning = itemView.findViewById<HorizontalScrollView>(R.id.hsvWordMeaning)
 
             val ivWord = itemView.findViewById<ImageView>(R.id.ivWord)
-            val url = "https://yamurrah.com.au/wp-content/uploads/2019/01/dog-square.jpg"
             if (dataItem.imageUrl == "") {
                 ivWord.visibility = View.GONE
-
-                //  POR HACER
-                hsvWord.layoutParams.width = -1
+                hsvWord.layoutParams.width = -1 // (POR HACER) Cambiar hsvWord por llWord...
                 hsvWordMeaning.layoutParams.width = -1
             } else {
                 // foto de internet a traves de Picasso
+                val url = "https://yamurrah.com.au/wp-content/uploads/2019/01/dog-square.jpg"
                 Picasso.get().load(url).resize(80.dpToPx(context), 80.dpToPx(context)).into(ivWord)
             }
 

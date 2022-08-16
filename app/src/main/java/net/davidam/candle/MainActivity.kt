@@ -47,13 +47,8 @@ class MainActivity : AppCompatActivity() {
     //  5)  MainActivity.kt (line 199) --> Implementar los dos métodos de abajo de esta activity
     //  6)  Implementar que el searchView salga de una bottom (top) page en vez de estar en el
     //      menú principal como un layout.
-    //  7)  Arreglar el mal comportamiento responsive que tienen los cardview cuando mostramos una
-    //      imagen con Picasso.
-    //      SOLUCION: Cuando hay imagen se tiene que fijar las anchuras de las horizontalScrollView
-    //      a 245dp / 230dp en tiempo de ejecución (programaticamente). Cuando  no haya imagen,
-    //      la anchura de los horizontalScrollView se deja a la que está por defecto
-    //      escrita en row_word.xml, "wrap_content". (CustomAdapterWord.kt --> line 67)
-    //  8)  Cambiar hsvWord de un HorizontalScrollView a un simple LinearLayout
+    //  7)  Cambiar hsvWord de un HorizontalScrollView a un simple LinearLayout (row_word.xml,
+    //      CustomAdapterWord.kt --> line 66)
 
     private lateinit var binding: ActivityMainBinding
     private lateinit var viewModel: ViewModel
