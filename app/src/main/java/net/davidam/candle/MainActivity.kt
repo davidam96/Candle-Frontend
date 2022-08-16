@@ -45,10 +45,15 @@ class MainActivity : AppCompatActivity() {
     //  4)  Implementar en el backend que solo se almacenen palabras en singular, si la palabra termina
     //      en 's' o en 'es' no se crea una nueva entrada en plural, se devuelve la del singular.
     //  5)  MainActivity.kt (line 199) --> Implementar los dos métodos de abajo de esta activity
-    //  6)  Arreglar el mal comportamiento responsive que tienen los cardview cuando mostramos una
-    //      imagen con Picasso.
-    //  7)  Implementar que el searchview salga de una page en vez de estar en el
+    //  6)  Implementar que el searchView salga de una bottom (top) page en vez de estar en el
     //      menú principal como un layout.
+    //  7)  Arreglar el mal comportamiento responsive que tienen los cardview cuando mostramos una
+    //      imagen con Picasso.
+    //      SOLUCION: Cuando hay imagen se tiene que fijar las anchuras de las horizontalScrollView
+    //      a 245dp / 230dp en tiempo de ejecución (programaticamente). Cuando  no haya imagen,
+    //      la anchura de los horizontalScrollView se deja a la que está por defecto
+    //      escrita en row_word.xml, "wrap_content". (CustomAdapterWord.kt --> line 67)
+    //  8)  Cambiar hsvWord de un HorizontalScrollView a un simple LinearLayout
 
     private lateinit var binding: ActivityMainBinding
     private lateinit var viewModel: ViewModel

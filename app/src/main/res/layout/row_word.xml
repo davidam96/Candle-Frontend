@@ -6,7 +6,7 @@
     android:id="@+id/cvWord"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    app:cardBackgroundColor="@color/blue_candle"
+    app:cardBackgroundColor="@color/red_candle"
     card_view:cardCornerRadius="22dp"
     card_view:contentPadding="0dp"
     card_view:cardUseCompatPadding="true"
@@ -19,27 +19,25 @@
 
         <HorizontalScrollView
             android:id="@+id/hsvWord"
-            android:layout_width="wrap_content"
+            android:layout_width="240dp"
             android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
             android:layout_marginTop="8dp"
-            android:layout_marginEnd="8dp"
+            android:layout_marginStart="20dp"
+            android:layout_marginEnd="12dp"
             android:scrollbars="none"
+            app:layout_constraintEnd_toStartOf="@+id/ivWord"
             app:layout_constraintStart_toEndOf="@+id/llTierColor"
             app:layout_constraintTop_toTopOf="parent">
 
             <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:paddingStart="0dp"
-                android:paddingEnd="40dp">
+                android:orientation="vertical">
 
                 <TextView
                     android:id="@+id/tvWord"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:maxHeight="58dp"
                     android:text="@string/word"
                     android:textColor="@color/black"
                     android:textSize="22sp" />
@@ -48,28 +46,28 @@
 
         <HorizontalScrollView
             android:id="@+id/hsvWordMeaning"
-            android:layout_width="wrap_content"
+            android:layout_width="220dp"
             android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
             android:layout_marginTop="4dp"
+            android:layout_marginStart="30dp"
+            android:layout_marginEnd="12dp"
             android:layout_marginBottom="8dp"
             android:scrollbars="none"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toEndOf="@+id/llTierColor"
-            app:layout_constraintEnd_toStartOf="@id/ivWord"
+            app:layout_constraintEnd_toStartOf="@+id/ivWord"
             app:layout_constraintTop_toBottomOf="@id/hsvWord"
             app:layout_constraintVertical_bias="0.0">
 
             <LinearLayout
                 android:layout_width="wrap_content"
-                android:layout_height="match_parent"
+                android:layout_height="wrap_content"
                 android:orientation="vertical">
 
                 <TextView
                     android:id="@+id/tvWordMeaning"
-                    android:layout_width="match_parent"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:maxHeight="42dp"
                     android:text="@string/word_meaning"
                     android:textColor="@color/white"
                     android:textSize="16sp"

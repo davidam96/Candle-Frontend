@@ -6,8 +6,11 @@ import android.util.DisplayMetrics
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.HorizontalScrollView
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.core.view.marginStart
+import androidx.core.view.updateLayoutParams
 import androidx.recyclerview.widget.RecyclerView
 import com.squareup.picasso.Picasso
 import net.davidam.candle.R
@@ -54,18 +57,21 @@ class CustomAdapterWord(
             val rnd: Int = (Math.random()*(dataItem.meanings!!.size)).toInt()
             tvWordMeaning.text = dataItem.meanings!![rnd]
 
+            val hsvWord = itemView.findViewById<HorizontalScrollView>(R.id.hsvWord)
+            val hsvWordMeaning = itemView.findViewById<HorizontalScrollView>(R.id.hsvWordMeaning)
+
             val ivWord = itemView.findViewById<ImageView>(R.id.ivWord)
             val url = "https://yamurrah.com.au/wp-content/uploads/2019/01/dog-square.jpg"
-            Picasso.get().load(url).resize(80.dpToPx(context), 80.dpToPx(context)).into(ivWord)
-            //  Picasso.get().load(url).fit().into(ivWord)
-/*            if (dataItem.imageUrl == "") {
+            if (dataItem.imageUrl == "") {
                 ivWord.visibility = View.GONE
-                tvWord.maxWidth = Integer.MAX_VALUE //  360.dpToPx(context)
-                tvWordMeaning.maxWidth = Integer.MAX_VALUE //  350.dpToPx(context)
-            } else if (dataItem.imageUrl != ""){
+
+                //  POR HACER
+                hsvWord.layoutParams.width = -1
+                hsvWordMeaning.layoutParams.width = -1
+            } else {
                 // foto de internet a traves de Picasso
-                Picasso.get().load(dataItem.imageUrl).into(ivWord)
-            }*/
+                Picasso.get().load(url).resize(80.dpToPx(context), 80.dpToPx(context)).into(ivWord)
+            }
 
             itemView.tag = dataItem
         }
