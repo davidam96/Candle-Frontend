@@ -9,7 +9,12 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Candle.NoActionBar">
         <activity
-            android:name=".MainActivity"
+            android:name=".view.WordActivity"
+            android:exported="false"
+            android:label="@string/title_activity_word"
+            android:theme="@style/Theme.Candle.NoActionBar" />
+        <activity
+            android:name=".view.MainActivity"
             android:exported="true"
             android:label="@string/candle">
             <intent-filter>

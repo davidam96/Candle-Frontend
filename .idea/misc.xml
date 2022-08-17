@@ -25,7 +25,9 @@
         <entry key="..\:/WS/WSandroid/Candle/app/src/main/res/layout/activity_main.xml" value="0.20153985507246377" />
         <entry key="..\:/WS/WSandroid/Candle/app/src/main/res/layout/activity_sign_in.xml" value="0.21920289855072464" />
         <entry key="..\:/WS/WSandroid/Candle/app/src/main/res/layout/activity_view_page.xml" value="0.25416666666666665" />
+        <entry key="..\:/WS/WSandroid/Candle/app/src/main/res/layout/activity_word.xml" value="0.25416666666666665" />
         <entry key="..\:/WS/WSandroid/Candle/app/src/main/res/layout/content_test.xml" value="0.21920289855072464" />
+        <entry key="..\:/WS/WSandroid/Candle/app/src/main/res/layout/content_word.xml" value="0.25416666666666665" />
         <entry key="..\:/WS/WSandroid/Candle/app/src/main/res/layout/fragment_account.xml" value="0.21920289855072464" />
         <entry key="..\:/WS/WSandroid/Candle/app/src/main/res/layout/fragment_exercises.xml" value="0.21920289855072464" />
         <entry key="..\:/WS/WSandroid/Candle/app/src/main/res/layout/fragment_find.xml" value="0.25416666666666665" />
@@ -38,6 +40,7 @@
         <entry key="..\:/WS/WSandroid/Candle/app/src/main/res/layout/fragment_search.xml" value="0.2" />
         <entry key="..\:/WS/WSandroid/Candle/app/src/main/res/layout/fragment_slideshow.xml" value="0.21920289855072464" />
         <entry key="..\:/WS/WSandroid/Candle/app/src/main/res/layout/row2_word.xml" value="0.25" />
+        <entry key="..\:/WS/WSandroid/Candle/app/src/main/res/layout/row3_word.xml" value="0.264" />
         <entry key="..\:/WS/WSandroid/Candle/app/src/main/res/layout/row_word.xml" value="0.253125" />
         <entry key="..\:/WS/WSandroid/Candle/app/src/main/res/layout/row_word_2.xml" value="0.25416666666666665" />
         <entry key="..\:/WS/WSandroid/Candle/app/src/main/res/menu/activity_main_drawer.xml" value="0.1078125" />

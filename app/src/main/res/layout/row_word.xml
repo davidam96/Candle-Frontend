@@ -9,42 +9,31 @@
     card_view:cardCornerRadius="22dp"
     card_view:contentPadding="0dp"
     card_view:cardUseCompatPadding="true"
-    card_view:cardElevation="0dp"
+    card_view:cardElevation="3dp"
     app:strokeColor="@color/black"
-    app:strokeWidth="0.5dp"
+    app:strokeWidth="0.8dp"
+    android:clickable="true"
     android:onClick="onClickWord">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/red_candle">
+        android:background="@color/pink">
 
-        <HorizontalScrollView
-            android:id="@+id/hsvWord"
+        <TextView
+            android:id="@+id/tvWord"
             android:layout_width="240dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
             android:layout_marginStart="20dp"
-            android:layout_marginEnd="12dp"
-            android:scrollbars="none"
+            android:layout_marginEnd="15dp"
+            android:text="@string/word"
+            android:textColor="@color/black"
+            android:textSize="22sp"
             app:layout_constraintEnd_toStartOf="@+id/ivWord"
             app:layout_constraintStart_toEndOf="@+id/llTierColor"
-            app:layout_constraintTop_toTopOf="parent">
+            app:layout_constraintTop_toTopOf="parent"/>
 
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:orientation="vertical">
-
-                <TextView
-                    android:id="@+id/tvWord"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="@string/word"
-                    android:textColor="@color/black"
-                    android:textSize="22sp" />
-            </LinearLayout>
-        </HorizontalScrollView>
 
         <HorizontalScrollView
             android:id="@+id/hsvWordMeaning"
@@ -52,13 +41,13 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="4dp"
             android:layout_marginStart="30dp"
-            android:layout_marginEnd="12dp"
+            android:layout_marginEnd="8dp"
             android:layout_marginBottom="8dp"
             android:scrollbars="none"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toEndOf="@+id/llTierColor"
             app:layout_constraintEnd_toStartOf="@+id/ivWord"
-            app:layout_constraintTop_toBottomOf="@id/hsvWord"
+            app:layout_constraintTop_toBottomOf="@id/tvWord"
             app:layout_constraintVertical_bias="0.0">
 
             <LinearLayout
@@ -71,7 +60,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/word_meaning"
-                    android:textColor="@color/white"
+                    android:textColor="@color/grey_dark"
                     android:textSize="16sp"
                     android:textStyle="italic" />
             </LinearLayout>
@@ -98,9 +87,7 @@
             android:orientation="horizontal"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent" >
-
-        </LinearLayout>
+            app:layout_constraintBottom_toBottomOf="parent" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

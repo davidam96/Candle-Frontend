@@ -99,6 +99,8 @@ class SearchFragment : Fragment(), SearchView.OnQueryTextListener {
     }
 
     override fun onQueryTextSubmit(text: String): Boolean {
+        //  This line clears the text inside the searchView
+        searchBar.setQuery("", false)
         //  This line prevents the code inside onQueryTextSubmit to execute twice
         //  inside the emulator when you press enter. Note that if you press the
         //  blue submit key of the Gboard keyboard, or you execute the app in any
@@ -107,8 +109,6 @@ class SearchFragment : Fragment(), SearchView.OnQueryTextListener {
         //  Activate Firestore machinery here to create a new document if the queried
         //  word doesn't exist, or return a document with the word info if it does.
         errorHandler(text)
-        //  This line clears the text inside the searchView
-        //  searchBar.setQuery("", false)
         return false
     }
 

@@ -9,8 +9,7 @@ import android.view.ViewGroup
 import android.widget.HorizontalScrollView
 import android.widget.ImageView
 import android.widget.TextView
-import androidx.core.view.marginStart
-import androidx.core.view.updateLayoutParams
+import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.recyclerview.widget.RecyclerView
 import com.squareup.picasso.Picasso
 import net.davidam.candle.R
@@ -52,18 +51,18 @@ class CustomAdapterWord(
 
             val tvWord = itemView.findViewById<TextView>(R.id.tvWord)
             tvWord.text = dataItem.words
-
             val tvWordMeaning = itemView.findViewById<TextView>(R.id.tvWordMeaning)
             val rnd: Int = (Math.random()*(dataItem.meanings!!.size)).toInt()
             tvWordMeaning.text = dataItem.meanings!![rnd]
 
-            val hsvWord = itemView.findViewById<HorizontalScrollView>(R.id.hsvWord)
+            //  val hsvWord = itemView.findViewById<HorizontalScrollView>(R.id.hsvWord)
             val hsvWordMeaning = itemView.findViewById<HorizontalScrollView>(R.id.hsvWordMeaning)
 
             val ivWord = itemView.findViewById<ImageView>(R.id.ivWord)
             if (dataItem.imageUrl == "") {
                 ivWord.visibility = View.GONE
-                hsvWord.layoutParams.width = -1 // (POR HACER) Cambiar hsvWord por llWord...
+                //  hsvWord.layoutParams.width = -1 // (POR HACER) Cambiar hsvWord por llWord...
+                tvWord.layoutParams.width = -1
                 hsvWordMeaning.layoutParams.width = -1
             } else {
                 // foto de internet a traves de Picasso
@@ -73,6 +72,7 @@ class CustomAdapterWord(
 
             itemView.tag = dataItem
         }
+
         private fun Int.dpToPx(context: Context) =
             this * context.resources.displayMetrics.densityDpi / DisplayMetrics.DENSITY_DEFAULT
     }

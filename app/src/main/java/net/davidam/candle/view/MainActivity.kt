@@ -1,7 +1,6 @@
-package net.davidam.candle
+package net.davidam.candle.view
 
 import android.annotation.SuppressLint
-import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import android.content.SharedPreferences
@@ -25,12 +24,14 @@ import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.FirebaseApp
 import com.google.firebase.auth.FirebaseAuth
 import com.google.gson.Gson
+import net.davidam.candle.R
 import net.davidam.candle.databinding.ActivityMainBinding
 import net.davidam.candle.fragments.AccountFragment
 import net.davidam.candle.fragments.PracticeFragment
 import net.davidam.candle.fragments.SearchFragment
 
 import net.davidam.candle.model.User
+import net.davidam.candle.model.WordDocument
 import net.davidam.candle.viewmodel.ViewModel
 
 class MainActivity : AppCompatActivity() {
@@ -47,8 +48,8 @@ class MainActivity : AppCompatActivity() {
     //  5)  MainActivity.kt (line 199) --> Implementar los dos métodos de abajo de esta activity
     //  6)  Implementar que el searchView salga de una bottom (top) page en vez de estar en el
     //      menú principal como un layout.
-    //  7)  Cambiar hsvWord de un HorizontalScrollView a un simple LinearLayout (row_word.xml,
-    //      CustomAdapterWord.kt --> line 66)
+    //  7)  Cambiar hsvWord de un HorizontalScrollView a un simple LinearLayout
+    //  8)  Solo me deja pulsar el CardView por los laterales para activar el metodo onClickWord
 
     private lateinit var binding: ActivityMainBinding
     private lateinit var viewModel: ViewModel
@@ -62,7 +63,7 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        //  Access the layout IDs via binding
+        //  Access activity_main.xml IDs via binding
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
@@ -147,7 +148,8 @@ class MainActivity : AppCompatActivity() {
             // Sign in failed. If response is null the user canceled the
             // sign-in flow using the back button. Otherwise check
             // response.error.errorCode and handle the error.
-            Log.d(TAG, "FirebaseUI error code: '${response!!.error!!.errorCode}' \n" +
+            Log.d(
+                TAG, "FirebaseUI error code: '${response!!.error!!.errorCode}' \n" +
                     "To get more information go to: https://github.com/firebase/FirebaseUI-Android" +
                     "/blob/master/auth/src/main/java/com/firebase/ui/auth/ErrorCodes.java")
         }
@@ -200,28 +202,22 @@ class MainActivity : AppCompatActivity() {
         snackBar.show()
     }
 
-    //  POR HACER
-
     private var resultLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
         // There are no request codes
 /*        if (result.resultCode == Activity.RESULT_OK) {
             val data: Intent? = result.data
-            val isFavoritosReturn = data!!.getBooleanExtra("isFavoritosReturn", false)
-            refreshFavoritos(isFavoritosReturn)
+            //  Do something here...
         }*/
     }
 
-    fun onClickWord(v: View) {
-/*        if (existeUsuario) {
-            val gamepulsado = v.tag as Game
-            val intent = Intent(this, NewActivity::class.java)
-            intent.putExtra("game", gamepulsado)
-            intent.putExtra("favoritos", favoritos)
-            intent.putExtra("isFavoritos", isFavoritos)
-
-            //startActivityForResult(intent, REQUEST_NEW) --> deprecated
-            resultLauncher.launch(intent) // --> nueva manera de hacerlo
-        }*/
+    fun onClickWord(cvWord: View) {
+        if (userSP.contains("user")) {
+            val pressedWord = cvWord.tag as WordDocument
+            val intent = Intent(this, WordActivity::class.java)
+            intent.putExtra("word", Gson().toJson(pressedWord))
+            intent.putExtra("user", Gson().toJson(user))
+            resultLauncher.launch(intent)
+        }
     }
     // ****************** VIEW ******************
 }

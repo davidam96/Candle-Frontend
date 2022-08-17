@@ -2,13 +2,13 @@
     <!-- Base application theme. -->
     <style name="Theme.Candle" parent="Theme.MaterialComponents.DayNight.NoActionBar">
         <!-- Primary brand color. -->
-        <item name="colorPrimary">@color/white</item>
+        <item name="colorPrimary">@color/pink_light</item>
         <item name="colorPrimaryVariant">@color/grey</item>
-        <item name="colorOnPrimary">@color/grey_light</item>
+        <item name="colorOnPrimary">@color/grey</item>
         <!-- Secondary brand color. -->
-        <item name="colorSecondary">@color/orange_candle</item>
-        <item name="colorSecondaryVariant">@color/beige</item>
-        <item name="colorOnSecondary">@color/yellow_candle</item>
+        <item name="colorSecondary">@color/grey_mild</item>
+        <item name="colorSecondaryVariant">@color/pink</item>
+        <item name="colorOnSecondary">@color/pink</item>
         <!-- Status bar color. -->
         <item name="android:statusBarColor">@color/red_candle</item>
         <!-- Customize your theme here. -->
