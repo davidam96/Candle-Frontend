@@ -33,6 +33,7 @@ abstract class CloudFunctions {
                         docsHM.forEach { docHM ->
                             val doc = WordDocument(docHM["words"] as String,
                                 docHM["wordCount"] as Int,
+                                docHM["plural"] as String,
                                 docHM["types"] as MutableList<String>,
                                 docHM["meanings"] as MutableList<String>,
                                 docHM["translations"] as MutableList<String>,

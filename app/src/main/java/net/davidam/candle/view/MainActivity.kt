@@ -37,19 +37,14 @@ import net.davidam.candle.viewmodel.ViewModel
 class MainActivity : AppCompatActivity() {
 
     //  (POR HACER):
-    //  1)  SearchFragment.kt (line 127) ---> Implementar el codigo del RecyclerView para que vaya
-    //      guardando las palabras buscadas por el usuario.
-    //  2)  AccountFragment.kt ---> When the user decides to logout in the profile section,
+    //  0)  En dictionaryGenerator.js, linea 309, el regex implementado jode muchas de las definiciones
+    //      proporcionadas para las palabras (vease liver meanings 0, 1, 2). Arreglarlo INMEDIATAMENTE.
+    //  1)  AccountFragment.kt ---> When the user decides to logout in the profile section,
     //      the user Shared Preferences must be deleted.
-    //  3)  ViewModel.kt (line 24) --> Remember to later make Firestore's security rules in order to
+    //  2)  ViewModel.kt (line 24) --> Remember to later make Firestore's security rules in order to
     //      restrict the format of all future database requests.
-    //  4)  Implementar en el backend que solo se almacenen palabras en singular, si la palabra termina
-    //      en 's' o en 'es' no se crea una nueva entrada en plural, se devuelve la del singular.
-    //  5)  MainActivity.kt (line 199) --> Implementar los dos métodos de abajo de esta activity
-    //  6)  Implementar que el searchView salga de una bottom (top) page en vez de estar en el
+    //  3)  Implementar que el SearchView salga de una bottom (top) page en vez de estar en el
     //      menú principal como un layout.
-    //  7)  Cambiar hsvWord de un HorizontalScrollView a un simple LinearLayout
-    //  8)  Solo me deja pulsar el CardView por los laterales para activar el metodo onClickWord
 
     private lateinit var binding: ActivityMainBinding
     private lateinit var viewModel: ViewModel

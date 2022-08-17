@@ -5,6 +5,7 @@ import java.time.LocalDate
 
 data class WordDocument(var words: String = "",
                         var wordCount: Int = 0,
+                        var plural: String = "",
                         var types: MutableList<String>? = null,
                         var meanings: MutableList<String>? = null,
                         var translations: MutableList<String>? = null,
